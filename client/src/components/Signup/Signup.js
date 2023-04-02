@@ -22,7 +22,12 @@ export default function Signup() {
         <Typography component="h1" variant="h5">
           Sign Up
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}> //form
+        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} 
+        sx={{
+          boxShadow: "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px",
+          padding: [2, 4]
+      }} 
+        > //form
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
