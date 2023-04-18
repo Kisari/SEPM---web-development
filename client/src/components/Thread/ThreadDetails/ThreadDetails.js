@@ -1,20 +1,28 @@
 import React from 'react'
-import { ButtonGroup, Button, Container, Grid, Typography, Avatar, List, ListItem, ListItemText, ListItemIcon, Stack } from '@mui/material'
+import { ButtonGroup, Button, Container, Grid, Typography, Avatar, List, ListItem, ListItemText, ListItemIcon, Stack, TextField } from '@mui/material'
+import { useParams } from 'react-router-dom'
 import useStyle from './style'
-import star from '../../../../../images/star.png'
-import notification from '../../../../../images/notification.png'
-import share from '../../../../../images/share.png'
-const SingleThread = () => {
+import Answer from './Answer/Answer'
+import star from '../../../images/star.png'
+import notification from '../../../images/notification.png'
+import share from '../../../images/share.png'
+
+const ThreadDetails = () => {
+    const routeParams = useParams();
+    console.log(routeParams); // this will use for indicate the post 
     const myStyle = useStyle();
     return (
         <>
-            <Container component="main" disableGutters={true} sx={{
-                border: "1px solid #CCCCCC",
-                borderRadius: "4px",
-                pointerEvents: "auto"
-            }}>
-                <Grid container>
-                    <Grid item xs={2} display='flex' justifyContent='center' alignItems='center' flexDirection='column'>
+            <Container component="main" disableGutters={true} className={myStyle.text}>
+                <Grid container className='headBar'>
+                    <Grid item xs={12} sx={{ float: 'right', padding: '12px 28px' }} display='flex' justifyContent='right' alignItems='right'>
+                        <Button variant='contained' size='medium'>
+                            Create thread
+                        </Button>
+                    </Grid>
+                </Grid>
+                <Grid container p={3} xs={10} className='headBar'>
+                    <Grid item xs={2} display='flex' justifyContent='start' alignItems='center' flexDirection='column'>
                         <Avatar alt="Star icon" src={star} />
                         <Typography component='span'>
                             983
@@ -78,12 +86,30 @@ const SingleThread = () => {
                         </Grid>
                     </Grid>
                 </Grid >
-            </Container >
+                <Grid container xs={10}>
+                    <Grid item sx={12} className='headBar'>
+                        <Answer></Answer>
+                    </Grid>
+                    <Grid item sx={12} className='headBar'>
+                        <Answer></Answer>
+                    </Grid>
+                </Grid>
+                <Grid container xs={10} p={4} rowSpacing={2}>
+                    <Grid item xs={12}>
+                        <Typography component='div' variant='body2'>
+                            Your answer
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField multiline fullWidth />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button size="small" variant='contained' sx={{ color: "white" }}> Post your answer</Button>
+                    </Grid>
+                </Grid>
+            </Container>
         </>
     )
 }
 
-
-
-
-export default SingleThread
+export default ThreadDetails
