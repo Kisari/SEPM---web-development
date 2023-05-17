@@ -4,6 +4,8 @@ const User = require("./../models/userModel");
 const Thread = require("./../models/threadModel");
 const sendEmail = require("./../utils/email")
 const { promisify } = require("util");
+const axios = require("axios");
+
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRATION,
@@ -35,14 +37,41 @@ const createSendToken = (user, statusCode, res) => {
 };
 
 exports.signup = async (req, res, next) => {
-  const newUser = await User.create({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-    passwordConfirm: req.body.passwordConfirm,
-  });
-  createSendToken(newUser, 201, res);
+    const newUser = await User.create({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      passwordConfirm: req.body.passwordConfirm,
+    });
+
+    const data ={
+      "username" : `${req.body.email}`,
+      "first_name": `${req.body.name}`,
+      "email": `${req.body.email}`,
+      "secret": `${req.body.email}`
+    };
+
+    const config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: 'https://api.chatengine.io/users/',
+        headers: { 
+          'PRIVATE-KEY': 'debcf359-8bde-4f01-97fc-40a5100959c8'
+        },
+        data : data
+    };
+
+    axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+    createSendToken(newUser, 201, res);
 };
+
 
 exports.login = async (req, res, next) => {
   // Check if email and password exists

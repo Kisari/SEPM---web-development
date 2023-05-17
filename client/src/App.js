@@ -10,12 +10,14 @@ import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
 import Home from "./components/Home/Home";
 import Thread from "./components/Thread/Thread"
-import Profile from './components/profile/Profile'
+import Profile from './components/Profile/Profile'
 import QuickChallenge from './components/Challenge/index'
 import { getAllThread } from "./actions/thread";
 import { getAllUser } from "./actions/user";
 import QuizPage from './components/Challenge/QuizPageRender'
 import Appointment from "./components/Scheduler/SchedulerPage";
+import LongChallengePage from "./components/Challenge/LongChallengePage"
+import ChatRender from "./chat/ChatRender";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -62,12 +64,16 @@ const App = () => {
               </ProtectedRoute>} />
             <Route exact path="/lChallenge" element={
               <ProtectedRoute>
-                <Appointment />
+                <LongChallengePage />
               </ProtectedRoute>} />
-            {/* <Route exact path="/appointment" element={
+            <Route exact path="/appointment" element={
               <ProtectedRoute>
                 <Appointment />
-              </ProtectedRoute>} /> */}
+              </ProtectedRoute>} />
+              <Route exact path="/chat" element={
+              <ProtectedRoute>
+                <ChatRender />
+              </ProtectedRoute>} />
           </Routes>
         </AuthProvider>
       </Router>

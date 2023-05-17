@@ -11,8 +11,8 @@ export default function userProfile() {
         <Grid item xs={1} sm={2} md={3}>
           <SideBar></SideBar>
         </Grid>
-        <Grid item xs={11} sm={10} md={9}>
-          <ProfileDetails></ProfileDetails>
+        <Grid item xs={11} sm={10} md={7}>
+          <ProfileDetails /> 
         </Grid>
       </Grid>
     </>
