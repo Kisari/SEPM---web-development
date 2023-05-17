@@ -16,6 +16,8 @@ import { getAllThread } from "./actions/thread";
 import QuizPage from './components/Challenge/QuizPageRender'
 import LongChallengePage from "./components/Challenge/LongChallengePage";
 import Appointment from "./components/Scheduler/SchedulerPage";
+// import ChatsPage from "./chat/ChatsPage";
+import ChatRender from "./chat/ChatRender";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -66,6 +68,10 @@ const App = () => {
               <Route exact path="/appointment" element={
               <ProtectedRoute>
                 <Appointment />
+              </ProtectedRoute>} />
+              <Route exact path="/chat" element={
+              <ProtectedRoute>
+                <ChatRender />
               </ProtectedRoute>} />
           </Routes>
         </AuthProvider>

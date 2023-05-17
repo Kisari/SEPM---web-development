@@ -14,7 +14,8 @@ import challenge from './challenge.png'
 import pin from './pin.png'
 import help from './help.png'
 import setting from './setting.png'
-import appoinment from './appointment.png'
+import appointment from './appointment.png'
+import chat from './chat.png'
 
 const SideBar = () => {
   const [state, setState] = useState({
@@ -240,10 +241,20 @@ const SideBar = () => {
                 <ListItemButton onClick={() => navigate('/Appointment')}>
                   <ListItemIcon>
                     <ListItemIcon>
-                      <Avatar src={appoinment} alt='appoinment' height="30px" />
+                      <Avatar src={appointment} alt='appoinment' height="30px" />
                     </ListItemIcon>
                   </ListItemIcon>
                   <ListItemText primary="Book appointments" />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton onClick={() => navigate('/chat')}>
+                  <ListItemIcon>
+                    <ListItemIcon>
+                      <Avatar src={chat} alt='Chat' height="30px" />
+                    </ListItemIcon>
+                  </ListItemIcon>
+                  <ListItemText primary="Chat" />
                 </ListItemButton>
               </ListItem>
               <ListItem disablePadding sx={{ background: openChallengeCollapse ? "#E6E9FE" : "none" }}>

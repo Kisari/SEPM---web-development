@@ -1,3 +1,4 @@
+import axios from "axios";
 import * as api from "../api/login&signup";
 
 export const createNewUser = (newUser, navigate) => async (dispatch) => {
@@ -6,6 +7,7 @@ export const createNewUser = (newUser, navigate) => async (dispatch) => {
 
         const action = { type: "CREATE", payload: data.data.user };
         dispatch(action);
+        // console.log(data.data.user);
 
         navigate('/login', { replace: true });
     } catch (error) {
