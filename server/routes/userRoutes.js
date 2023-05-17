@@ -9,7 +9,10 @@ router.post("/login", authController.login);
 router.post("/forgotPassword", authController.forgotPassword);
 router.patch("/resetPassword/:token", authController.resetPassword);
 
-router.patch('/updateMyPassword',authController.protect, authController.updatePassword);
+router.patch('/updateMyPassword', authController.protect, authController.updatePassword);
+
+router.get('/', authController.getAllUser);
+router.patch("/:id", authController.updateUser)
 
 router.post("/post/likeFunction/:id", authController.protect, authController.likeUnlikePost)
 router.post("/post/pinFunction/:id", authController.protect, authController.pinUnpinnedPost)

@@ -6,7 +6,7 @@ import useStyle from './style'
 import Answer from './Answer/Answer'
 import { getAllThread } from '../../../actions/thread'
 
-import star from '../../../images/star.png'
+import like from '../../../images/like.png'
 import notification from '../../../images/notification.png'
 import share from '../../../images/share.png'
 
@@ -14,11 +14,10 @@ const ThreadDetails = () => {
     const myStyle = useStyle();
     const dispatch = useDispatch();
     const routeParams = useParams();
-    const thread = useSelector((state) => state.threadReducer[1]?.filter((thread) => !thread.threadID.localeCompare(routeParams.threadID)))?.[0];
+    const thread = useSelector((state) => state.threadReducer.data.threadData?.filter((thread) => !String(thread.threadID).localeCompare(routeParams.threadID)))?.[0];
     useEffect(() => {
         dispatch(getAllThread());
     }, [dispatch])
-    console.log(thread);
     return (
         thread ?
             <>
@@ -33,7 +32,7 @@ const ThreadDetails = () => {
                     <Grid container p={3} className='headBar'>
                         <Grid container pr={0}>
                             <Grid item xs={2} display='flex' justifyContent='start' alignItems='center' flexDirection='column'>
-                                <Avatar alt="Star icon" src={star} />
+                                <Avatar alt="like icon" src={like} />
                                 <Typography component='span'>
                                     {thread.likes.length}
                                 </Typography>

@@ -74,34 +74,73 @@ exports.signup = async (req, res, next) => {
 
 
 exports.login = async (req, res, next) => {
-    // Check if email and password exists
-    const { email, password } = req.body;
+  // Check if email and password exists
+  const { email, password } = req.body;
 
-    if (!email || !password) {
-      return next(
-        res.status(400).json({
-          status: "Please provide email and password!",
-        })
-      );
-    }
-    // Check if user exists && password is correct
-    const user = await User.findOne({ email }).select("+password");
+  if (!email || !password) {
+    return next(
+      res.status(400).json({
+        status: "Please provide email and password!",
+      })
+    );
+  }
+  // Check if user exists && password is correct
+  const user = await User.findOne({ email }).select("+password");
 
-    // If everything is ok, send token to client
-    if (!user || !(await user.correctPassword(password, user.password))) {
-      return next(
-        res.status(401).json({
-          status: "Incorrect email or password",
-        })
-      );
-    }
-    createSendToken(user, 200, res);
+  // If everything is ok, send token to client
+  if (!user || !(await user.correctPassword(password, user.password))) {
+    return next(
+      res.status(401).json({
+        status: "Incorrect email or password",
+      })
+    );
+  }
+  createSendToken(user, 200, res);
+};
+
+exports.getAllUser = async (req, res) => {
+  try {
+
+    const userData = await User.find();
+    res.status(200).json({
+      status: "Success",
+      results: userData.length,
+      data: {
+        userData,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "Failed to get all user",
+      message: err,
+    });
+  }
+};
+
+exports.updateUser = async (req, res) => {
+  try {
+    const userData = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    res.status(200).json({
+      status: "Successfully updated user data",
+      data: {
+        userData,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "Failed updating user data",
+      message: err,
+    });
+  }
 };
 
 exports.forgotPassword = async (req, res, next) => {
   try {
-    const user = await User.findOne({ email: req.body.email})
-    if (!user){
+    const user = await User.findOne({ email: req.body.email })
+    if (!user) {
       return next(
         res.status(404).json({
           status: "There is no user with email address",
@@ -121,7 +160,7 @@ exports.forgotPassword = async (req, res, next) => {
         subject: 'Your password reset token (valid for 10 min)',
         message
       });
-  
+
       res.status(200).json({
         status: 'success',
         message: 'Token sent to email!'
@@ -130,7 +169,7 @@ exports.forgotPassword = async (req, res, next) => {
       user.passwordResetToken = undefined;
       user.passwordResetExpires = undefined;
       await user.save({ validateBeforeSave: false });
-  
+
       return next(
         res.status(500).json({
           status: "There was an error sending the email. Try again later!",
@@ -138,41 +177,41 @@ exports.forgotPassword = async (req, res, next) => {
       );
     }
   } catch (err) {
-      res.status(500).json({
-        message: err.message
-      })
+    res.status(500).json({
+      message: err.message
+    })
   }
 }
 
 exports.resetPassword = async (req, res, next) => {
-// 1) Get user based on the token
-        const hashedToken = crypto
-.createHash('sha256')
-.update(req.params.token)
-.digest('hex');
+  // 1) Get user based on the token
+  const hashedToken = crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex');
 
-const user = await User.findOne({
-passwordResetToken: hashedToken,
-passwordResetExpires: { $gt: Date.now() }
-});
+  const user = await User.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetExpires: { $gt: Date.now() }
+  });
 
-// 2) If token has not expired, and there is user, set the new password
-if (!user) {
-return next(
-  res.status(400).json({
-    message: "Token is invalid or has expired"
-  })
-)
-}
-user.password = req.body.password;
-user.passwordConfirm = req.body.passwordConfirm;
-user.passwordResetToken = undefined;
-user.passwordResetExpires = undefined;
-await user.save();
+  // 2) If token has not expired, and there is user, set the new password
+  if (!user) {
+    return next(
+      res.status(400).json({
+        message: "Token is invalid or has expired"
+      })
+    )
+  }
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
+  user.passwordResetToken = undefined;
+  user.passwordResetExpires = undefined;
+  await user.save();
 
-// 3) Update changedPasswordAt property for the user
-// 4) Log the user in, send 
-createSendToken(user, 200, res);
+  // 3) Update changedPasswordAt property for the user
+  // 4) Log the user in, send 
+  createSendToken(user, 200, res);
 }
 
 exports.protect = async (req, res, next) => {
@@ -254,7 +293,7 @@ exports.likeUnlikePost = async (req, res, next) => {
       )
     }
 
-    if (post.likes.includes(currentUser._id)){
+    if (post.likes.includes(currentUser._id)) {
       const index = post.likes.indexOf(currentUser._id);
       post.likes.splice(index, 1)
       await post.save()
@@ -269,7 +308,7 @@ exports.likeUnlikePost = async (req, res, next) => {
         message: "Post liked"
       })
     }
-  } catch (err){ 
+  } catch (err) {
     res.status(400).json({
       status: "Function Like/Unlike failed",
       message: err,
@@ -291,7 +330,7 @@ exports.pinUnpinnedPost = async (req, res, next) => {
       )
     }
 
-    if (post.pins.includes(currentUser._id)){
+    if (post.pins.includes(currentUser._id)) {
       const index = post.pins.indexOf(currentUser._id);
       post.pins.splice(index, 1)
       await post.save()
@@ -306,7 +345,7 @@ exports.pinUnpinnedPost = async (req, res, next) => {
         message: "Post pinned"
       })
     }
-  } catch (err){ 
+  } catch (err) {
     res.status(400).json({
       status: "Function Pin/Unpinned failed",
       message: err,
@@ -328,7 +367,7 @@ exports.tagUntaggedPost = async (req, res, next) => {
       )
     }
 
-    if (post.tags.includes(currentUser._id)){
+    if (post.tags.includes(currentUser._id)) {
       const index = post.tags.indexOf(currentUser._id);
       post.tags.splice(index, 1)
       await post.save()
@@ -343,7 +382,7 @@ exports.tagUntaggedPost = async (req, res, next) => {
         message: "Post tagged"
       })
     }
-  } catch (err){ 
+  } catch (err) {
     res.status(400).json({
       status: "Function Tag/Untagged failed",
       message: err,
@@ -365,7 +404,7 @@ exports.shareUnsharedPost = async (req, res, next) => {
       )
     }
 
-    if (post.shares.includes(currentUser._id)){
+    if (post.shares.includes(currentUser._id)) {
       const index = post.shares.indexOf(currentUser._id);
       post.shares.splice(index, 1)
       await post.save()
@@ -380,7 +419,7 @@ exports.shareUnsharedPost = async (req, res, next) => {
         message: "Post shared"
       })
     }
-  } catch (err){ 
+  } catch (err) {
     res.status(400).json({
       status: "Function Share/Unshared failed",
       message: err,
