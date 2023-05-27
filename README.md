@@ -25,18 +25,7 @@ Clone the project
   git clone https://github.com/Kisari/SEPM---web-development
 ```
 
-Go to the client project directory
-
-```bash
-  cd client
-```
-
-Install dependencies
-
-```bash
-  npm install --force
-```
-Go to the server project directory
+Go to the server of project directory
 
 ```bash
   cd server
@@ -47,10 +36,41 @@ Install dependencies
 ```bash
   npm install
 ```
-
-Start the server
+Start server
 
 ```bash
   npm run start
+```
+
+Install client dependencies
+
+```bash
+  cd client
+```
+
+Install dependencies
+
+```bash
+  npm install --force
+```
+
+Start client 
+
+```bash
+  npm start
+```
+
+
+## Testing account
+Newbie account :
+```
+Minhtest@gmail.com
+Minhtest12
+```
+
+Beginner account :
+```
+khang@gmail.com
+Khang123
 ```
 
