@@ -111,11 +111,11 @@ export default function UserProfile() {
         const newTitle = {
             title: steps[2].reward
         }
-        dispatch(updateUser(currentUser?._id, newTitle))
+        dispatch(updateUser(currentUser?._id, newTitle, navigate));
         let currentUserData = JSON.parse(localStorage.getItem("NETTEE_TOKEN"));
         currentUserData['data']['user']['title'] = steps[2].reward;
         localStorage.setItem("NETTEE_TOKEN", JSON.stringify(currentUserData));
-        navigate(0);
+        // navigate(0);
     };
 
     return (

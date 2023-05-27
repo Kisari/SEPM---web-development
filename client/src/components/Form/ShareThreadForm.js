@@ -22,9 +22,7 @@ const ShareThreadForm = ({ isOpen, toggleOpenModal, threadID }) => {
         const newShares = {
             shares: addUser.addedList.map((user) => user?._id)
         }
-        console.log(newShares);
-        // dispatch(shareThread(threadID, newShares));
-        // navigate(0);
+        dispatch(shareThread(threadID, newShares, navigate));
     }
 
     const handleAddPeople = (user) => {
