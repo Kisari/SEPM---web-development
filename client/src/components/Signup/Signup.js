@@ -14,7 +14,6 @@ export default function Signup() {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
     dispatch(createNewUser(data, history));
   };
   return (

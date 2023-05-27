@@ -53,7 +53,9 @@ export default function UserProfile() {
     const allUser = useSelector((state) => state.userReducer?.allUserData);
     const allThread = useSelector((state) => state.threadReducer?.data?.threadData);
     const currentUserThreads = allThread?.filter((thread) => thread?.userID === currentUser._id);
-    const totalLikes = currentUserThreads.map((singleThread) => singleThread.likes).length;
+    const totalLikes = currentUserThreads.map((singleThread) => singleThread.likes.length).reduce((accumulator, value) => {
+        return accumulator + value;
+    }, 0);
     const totalComments = allThread.map((thread) =>
         thread?.comments?.filter((comment) =>
             comment?.userID === currentUser._id).length)

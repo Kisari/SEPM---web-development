@@ -137,6 +137,7 @@ const ThreadDetails = () => {
                                 <Typography component="div" className='bodyText'>
                                     {thread.content}
                                 </Typography>
+                                {thread?.image && <img alt="Question answer" src={thread?.image} className='Answer image' style={{ maxWidth: '100%', marginTop: '8px', maxHeight: "300px" }} />}
                                 <Typography component="div" className='commentCount'>
                                     {thread.comments.length} comments
                                 </Typography>
