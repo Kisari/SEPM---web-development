@@ -71,7 +71,7 @@ const App = () => {
               </ProtectedRoute>} />
             <Route exact path="/chat" element={
               <ProtectedRoute>
-                <ChatRender />
+                {/* <ChatRender /> */}
               </ProtectedRoute>} />
           </Routes>
         </AuthProvider>
