@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Modal, Box, Typography, Button, Avatar, Divider, Paper, Grid, InputBase, Checkbox, Chip } from '@mui/material'
 import { useForm } from "react-hook-form"
 import { useSelector, useDispatch } from "react-redux";
+import { createSelector } from '@reduxjs/toolkit'
 import { useNavigate } from 'react-router-dom';
 import { shareThread } from '../../actions/user';
 import search from '../../images/search.png'
@@ -16,7 +17,10 @@ const ShareThreadForm = ({ isOpen, toggleOpenModal, threadID }) => {
     const { handleSubmit } = useForm();
 
     let regExp = new RegExp(searchContext, 'gi');
-    const allUser = useSelector((state) => state.userReducer?.allUserData.map((user) => regExp.test(user.name) && user));
+    const getProperUserData = createSelector((state) => state.userReducer?.allUserData, (data) => data.map((user) => regExp.test(user.name) && user));
+    const allUser = useSelector(getProperUserData);
+
+    // const allUser = useSelector((state) => state.userReducer?.allUserData.map((user) => regExp.test(user.name) && user));
 
     const handleForm = () => {
         const newShares = {

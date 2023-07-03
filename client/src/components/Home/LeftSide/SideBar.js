@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Container, InputBase, Paper, IconButton, ListItemAvatar, Popper, Box, Drawer, Divider, ListItemText, ListItem, ListItemButton, List, Button, ListItemIcon, Avatar, Grid, Collapse, Link, Typography } from "@mui/material";
-import { useSpring, animated } from '@react-spring/web'
-import PropTypes from 'prop-types'
+// import { useSpring, animated } from '@react-spring/web'
+// import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux"
 import { getAllThread } from '../../../actions/thread'
@@ -55,36 +55,36 @@ const SideBar = () => {
     return res;
   };
 
-  const Fade = React.forwardRef(function Fade(props, ref) {
-    const { in: openNotification, children, onEnter, onExited, ...other } = props;
-    const style = useSpring({
-      from: { opacity: 0 },
-      to: { opacity: openNotification ? 1 : 0 },
-      onStart: () => {
-        if (openNotification && onEnter) {
-          onEnter();
-        }
-      },
-      onRest: () => {
-        if (!openNotification && onExited) {
-          onExited();
-        }
-      },
-    });
+  // const Fade = React.forwardRef(function Fade(props, ref) {
+  //   const { in: openNotification, children, onEnter, onExited, ...other } = props;
+  //   const style = useSpring({
+  //     from: { opacity: 0 },
+  //     to: { opacity: openNotification ? 1 : 0 },
+  //     onStart: () => {
+  //       if (openNotification && onEnter) {
+  //         onEnter();
+  //       }
+  //     },
+  //     onRest: () => {
+  //       if (!openNotification && onExited) {
+  //         onExited();
+  //       }
+  //     },
+  //   });
 
-    return (
-      <animated.div ref={ref} style={style} {...other}>
-        {children}
-      </animated.div>
-    );
-  });
+  //   return (
+  //     <animated.div ref={ref} style={style} {...other}>
+  //       {children}
+  //     </animated.div>
+  //   );
+  // });
 
-  Fade.propTypes = {
-    children: PropTypes.element,
-    in: PropTypes.bool,
-    onEnter: PropTypes.func,
-    onExited: PropTypes.func,
-  };
+  // Fade.propTypes = {
+  //   children: PropTypes.element,
+  //   in: PropTypes.bool,
+  //   onEnter: PropTypes.func,
+  //   onExited: PropTypes.func,
+  // };
 
   const handleClick = () => {
     setOpenUserCollapse(!openUserCollapse);
