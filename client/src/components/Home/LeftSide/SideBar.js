@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Container, InputBase, Paper, IconButton, ListItemAvatar, Popper, Box, Drawer, Divider, ListItemText, ListItem, ListItemButton, List, Button, ListItemIcon, Avatar, Grid, Collapse, Link, Typography } from "@mui/material";
-// import { useSpring, animated } from '@react-spring/web'
-// import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux"
 import { getAllThread } from '../../../actions/thread'
 import { getAllUser } from '../../../actions/user';
-import { useAuth } from '../../../auth/AuthHook';
+import { createSelector } from '@reduxjs/toolkit'
 import Logo from './nettee.png'
 import expandLess from './expandLess.png'
 import expandMore from './expandMore.png'
@@ -32,12 +30,15 @@ const SideBar = () => {
   const [width, setWindowWidth] = useState(window.innerWidth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { logout } = useAuth();
   const currentUser = JSON.parse(localStorage.getItem("NETTEE_TOKEN"))?.data?.user;
+  //adding more createSelector function
+  const getProperPinnedThreadData = createSelector((state) => state.threadReducer?.data?.threadData, (data) => data?.filter((singlethread) => singlethread?.pins?.includes(currentUser?._id)));
+  const getProperSharedThreadData = createSelector((state) => state.threadReducer?.data?.threadData, (data) => data?.filter((singlethread) => singlethread?.shares?.includes(currentUser?._id)));
+  const getProperAllUserData = createSelector((state) => state.userReducer?.allUserData, (data) => data);
 
-  const pinnedThread = useSelector((state) => state.threadReducer?.data?.threadData?.filter((singlethread) => singlethread?.pins?.includes(currentUser?._id)));
-  const sharedThread = useSelector((state) => state.threadReducer?.data?.threadData?.filter((singlethread) => singlethread?.shares?.includes(currentUser?._id)));
-  const allUser = useSelector((state) => state.userReducer?.allUserData);
+  const pinnedThread = useSelector(getProperPinnedThreadData);
+  const sharedThread = useSelector(getProperSharedThreadData);
+  const allUser = useSelector(getProperAllUserData);
 
   var ids = new Set(pinnedThread.map(d => d.ID));
   let thread = [...pinnedThread, ...sharedThread.filter(d => !ids.has(d.ID))];
@@ -54,37 +55,6 @@ const SideBar = () => {
     });
     return res;
   };
-
-  // const Fade = React.forwardRef(function Fade(props, ref) {
-  //   const { in: openNotification, children, onEnter, onExited, ...other } = props;
-  //   const style = useSpring({
-  //     from: { opacity: 0 },
-  //     to: { opacity: openNotification ? 1 : 0 },
-  //     onStart: () => {
-  //       if (openNotification && onEnter) {
-  //         onEnter();
-  //       }
-  //     },
-  //     onRest: () => {
-  //       if (!openNotification && onExited) {
-  //         onExited();
-  //       }
-  //     },
-  //   });
-
-  //   return (
-  //     <animated.div ref={ref} style={style} {...other}>
-  //       {children}
-  //     </animated.div>
-  //   );
-  // });
-
-  // Fade.propTypes = {
-  //   children: PropTypes.element,
-  //   in: PropTypes.bool,
-  //   onEnter: PropTypes.func,
-  //   onExited: PropTypes.func,
-  // };
 
   const handleClick = () => {
     setOpenUserCollapse(!openUserCollapse);
