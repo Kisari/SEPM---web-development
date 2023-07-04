@@ -1,6 +1,4 @@
-import { makeStyles } from "@mui/styles";
-
-export default makeStyles(() => ({
+const myStyle = {
     text: {
         "& .headBar": {
             boxShadow: "rgba(0, 0, 0, 0.15) 0px 3px 3px 0px",
@@ -72,4 +70,8 @@ export default makeStyles(() => ({
             lineHeight: "12px",
         }
     },
-}))
+}
+
+
+
+export default myStyle

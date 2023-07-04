@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { useState } from 'react'
 import { useSelector, useDispatch } from "react-redux";
+import { createSelector } from '@reduxjs/toolkit';
 import { useNavigate } from 'react-router-dom';
 import { updateUser } from '../../actions/user';
 import Button from '@mui/material/Button';
@@ -50,8 +51,8 @@ export default function UserProfile() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const currentUser = JSON.parse(localStorage.getItem("NETTEE_TOKEN"))?.data?.user;
-    const allUser = useSelector((state) => state.userReducer?.allUserData);
-    const allThread = useSelector((state) => state.threadReducer?.data?.threadData);
+    const getProperAllThread = createSelector((state) => state.threadReducer?.data?.threadData, (data) => data);
+    const allThread = useSelector(getProperAllThread);
     const currentUserThreads = allThread?.filter((thread) => thread?.userID === currentUser._id);
     const totalLikes = currentUserThreads.map((singleThread) => singleThread.likes.length).reduce((accumulator, value) => {
         return accumulator + value;

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, Typography, Avatar, Chip, Stack } from '@mui/material'
-import useStyle from './style'
+import myStyle from './style'
 import like from '../../../../images/like.png'
 import accept from '../../../../images/accept.png'
 import newbie from '../../../../images/newbie.png'
@@ -17,7 +17,6 @@ import java from '../../../../images/java.png'
 
 
 const Answer = ({ data }) => {
-    const myStyle = useStyle();
     var title = newbie;
     switch (data?.userID?.title) {
         case "Beginner":
@@ -93,11 +92,11 @@ const Answer = ({ data }) => {
                         {(data?.userID?.title && (data?.userID?.title !== "Newbie")) && <img src={accept} alt="certificated icon" style={{ width: '24px', height: '24px' }} />}
                     </Typography>
                 </Grid>
-                <Grid item xs={10} className={myStyle.answer}>
+                <Grid item xs={10} sx={myStyle.answer}>
                     <Typography component="div" className='bodyText'>
                         {data?.content}
                     </Typography>
-                    {data?.image && <img alt="Question answer" src={data?.image} className='Answer image' style={{ maxWidth: '100%', marginTop: '8px' }} />}
+                    {data?.image && <img alt="Question answer" src={data?.image} style={{ maxWidth: '100%', marginTop: '8px' }} />}
                     <Grid item xs={12} sx={{ padding: "0 16px 0 16px" }} display='flex' justifyContent='space-between'>
                         <Typography component="span">
                             {new Date().getDate() - new Date(data?.createdAt).getDate()} days ago by {data?.userID?.name}

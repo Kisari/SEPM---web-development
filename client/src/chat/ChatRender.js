@@ -1,4 +1,3 @@
-import ChatsPage from "./ChatsPage";
 import React from 'react'
 import { Grid } from '@mui/material'
 import SideBar from '../components/Home/LeftSide/SideBar'
@@ -11,7 +10,7 @@ const ChatRender = () => {
                     <SideBar></SideBar>
                 </Grid>
                 <Grid item xs={10} sm={10} md={9} >
-                    <ChatsPage />
+                    {/* <ChatsPage /> */}
                 </Grid>
             </Grid>
         </>

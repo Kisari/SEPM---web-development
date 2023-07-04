@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form"
 import { addCommentToThread } from '../../../actions/thread';
 import { likeThread, pinThread } from '../../../actions/user';
-import useStyle from './style'
+import myStyle from './style'
 import Answer from './Answer/Answer'
 import ShareThreadForm from '../../Form/ShareThreadForm';
 
@@ -28,7 +28,6 @@ const ThreadDetails = () => {
         { key: 3, label: 'React', image: react },
         { key: 4, label: 'Vue.js', image: vuejs },
     ]
-    const myStyle = useStyle();
     const routeParams = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -104,7 +103,7 @@ const ThreadDetails = () => {
     return (
         thread ?
             <>
-                <Container component="main" disableGutters={true} className={myStyle.text}>
+                <Container component="main" disableGutters={true} sx={myStyle.text}>
                     <ShareThreadForm toggleOpenModal={toggleOpenModal} isOpen={openShareBox} threadID={thread._id} />
                     <Grid container className='headBar'>
                         <Grid item xs={12} sx={{ float: 'right', padding: '12px 28px' }} display='flex' justifyContent='right' alignItems='right'>
@@ -123,10 +122,10 @@ const ThreadDetails = () => {
                                     {thread.likes.length}
                                 </Typography>
                             </Grid>
-                            <Grid item xs={10} className={myStyle.list}>
+                            <Grid item xs={10} sx={myStyle.list}>
                                 <List>
                                     <ListItem
-                                        className={myStyle.listItemText}
+                                        sx={myStyle.listItemText}
                                     >
                                         <ListItemText
                                             primary={thread.title}
@@ -149,7 +148,7 @@ const ThreadDetails = () => {
                                         flexWrap: "wrap",
                                         justifyContent: "space-between"
                                     }}>
-                                        <Stack spacing={1} direction="row" className={myStyle.tags}>
+                                        <Stack spacing={1} direction="row" sx={myStyle.tags}>
                                             {thread?.tags && thread?.tags?.map((tag, index) => {
                                                 return (
                                                     tagsData.map((singleTag) => {
@@ -172,18 +171,16 @@ const ThreadDetails = () => {
                                         </Stack>
                                         <Typography component="span" className='times'>
                                             <ButtonGroup>
-                                                <Button sx={{ borderRadius: 10, background: isPin ? '#ffc107' : 'none' }}
+                                                <Button sx={[{ borderRadius: 10, background: isPin ? '#ffc107' : 'none' }, myStyle.startIcon]}
                                                     variant="text"
                                                     startIcon={<img alt="Notification icon" src={notification} />}
-                                                    className={myStyle.startIcon}
                                                     size="small"
                                                     onClick={handlePinFunction}
                                                 >
                                                 </Button>
-                                                <Button sx={{ borderRadius: 10 }}
+                                                <Button sx={[{ borderRadius: 10 }, myStyle.startIcon]}
                                                     variant="text"
                                                     startIcon={<img alt="Share icon" src={share} />}
-                                                    className={myStyle.startIcon}
                                                     size="small"
                                                     onClick={() => toggleOpenModal(true)}
                                                 >

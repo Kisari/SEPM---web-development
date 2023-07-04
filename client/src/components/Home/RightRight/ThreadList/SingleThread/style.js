@@ -1,6 +1,4 @@
-import { makeStyles } from "@mui/styles";
-
-export default makeStyles(() => ({
+const myStyle = {
     startIcon: {
         "& .MuiButton-startIcon": {
             margin: "0",
@@ -63,4 +61,5 @@ export default makeStyles(() => ({
             lineHeight: "12px",
         }
     },
-}))
+}
+export default myStyle

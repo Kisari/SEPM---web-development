@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { likeThread, pinThread } from '../../../../../actions/user'
 import ShareThreadForm from '../../../../Form/ShareThreadForm'
-import useStyle from './style'
+import myStyle from './style'
 import like from '../../../../../images/like.png'
 import unlike from '../../../../../images/unlike.png'
 import notification from '../../../../../images/notification.png'
@@ -25,7 +25,6 @@ const SingleThread = ({ data }) => {
 
     const currentUser = JSON.parse(localStorage.getItem("NETTEE_TOKEN"));
     const dispatch = useDispatch();
-    const myStyle = useStyle();
     const navigate = useNavigate();
     const [isLike, setIsLike] = useState(data?.likes?.includes(currentUser?.data?.user._id));
     const [isPin, setIsPin] = useState(data?.pins?.includes(currentUser?.data?.user._id));
@@ -70,10 +69,10 @@ const SingleThread = ({ data }) => {
                             {data?.likes?.length}
                         </Typography>
                     </Grid>
-                    <Grid item xs={10} className={myStyle.list}>
+                    <Grid item xs={10} sx={myStyle.list}>
                         <List>
                             <ListItem
-                                className={myStyle.listItemText}
+                                sx={myStyle.listItemText}
                             >
                                 <ListItemText
                                     primary={`Posted by ${data?.userData?.name}`}
@@ -87,19 +86,17 @@ const SingleThread = ({ data }) => {
                                 <ListItemIcon>
                                     <ButtonGroup>
                                         <Badge color='secondary'>
-                                            <Button sx={{ borderRadius: 10, background: isPin ? '#ffc107' : 'none' }}
+                                            <Button sx={[{ borderRadius: 10, background: isPin ? '#ffc107' : 'none' }, myStyle.startIcon]}
                                                 variant="outlined"
                                                 startIcon={<img alt="Notification icon" src={notification} style={{ width: '24px', height: '24px' }} />}
-                                                className={myStyle.startIcon}
                                                 size="small"
                                                 onClick={handlePinFunction}
                                             >
                                             </Button>
                                         </Badge>
-                                        <Button sx={{ borderRadius: 10 }}
+                                        <Button sx={[{ borderRadius: 10 }, myStyle.startIcon]}
                                             variant="outlined"
                                             startIcon={<img alt="Share icon" src={share} style={{ width: '24px', height: '24px' }} />}
-                                            className={myStyle.startIcon}
                                             size="small"
                                             onClick={() => toggleOpenModal(true)}
                                         >
@@ -115,7 +112,7 @@ const SingleThread = ({ data }) => {
                             {(data?.comments?.length > 1000) ? `${Math.floor(data?.comments?.length / 1000)}.${data?.comments?.length - (Math.floor(data?.comments?.length / 1000) * 1000)}` : data?.comments?.length} comments
                         </Typography>
                         <Grid item xs={12} sx={{ padding: "0 16px 0 16px" }} display='flex' justifyContent='space-between'>
-                            <Stack spacing={1} direction="row" className={myStyle.tags}>
+                            <Stack spacing={1} direction="row" sx={myStyle.tags}>
                                 {data?.tags && data?.tags?.map((tag, index) => {
                                     return (
                                         tagsData.map((singleTag) => {

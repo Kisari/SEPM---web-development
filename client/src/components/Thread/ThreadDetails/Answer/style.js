@@ -1,6 +1,4 @@
-import { makeStyles } from "@mui/styles";
-
-export default makeStyles(() => ({
+const myStyle = {
     answer: {
         "& .img": {
             maxWidth: "100%",
@@ -20,4 +18,6 @@ export default makeStyles(() => ({
             padding: "0 16px 0 16px"
         },
     },
-}))
+}
+
+export default myStyle

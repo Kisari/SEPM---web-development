@@ -1,7 +1,4 @@
-import { makeStyles } from '@mui/styles'
-
-export default makeStyles(() => ({
-
+const myStyle = {
     text: {
         "& .MuiContainer-root": {
             fontWeight: "bold",
@@ -24,5 +21,7 @@ export default makeStyles(() => ({
         },
 
     }
-}))
+}
+
+export default myStyle
 
